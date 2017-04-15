@@ -3,6 +3,8 @@ using NameAPI.Models;
 using System.Net;
 using System;
 using Newtonsoft.Json;
+using System.Web.Script.Serialization;
+using System.Collections;
 
 namespace NameAPI
 {
@@ -24,8 +26,22 @@ namespace NameAPI
 
             // attempt to download JSON data as a string
             json_data = GetJsonData(url);
+            List<NameModel> jsonResult = new List<NameModel>();
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
 
-            List<NameModel> jsonResult = !string.IsNullOrEmpty(json_data) ? JsonConvert.DeserializeObject<List<NameModel>>(json_data) : new List<NameModel>();
+            //ListOfNames nameList = new ListOfNames();
+
+            try
+            {
+                jsonResult = serializer.Deserialize<List<NameModel>>(json_data);
+                jsonResult = JsonConvert.DeserializeObject<List<NameModel>>(json_data);
+            }
+            catch (Exception)
+            {
+                jsonResult = new List<NameModel>();
+            }
+
+            //if (!string.IsNullOrEmpty(json_data))
 
             return jsonResult;
         }
@@ -77,7 +93,7 @@ namespace NameAPI
             {
                 jsonString = w.DownloadString(url);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 jsonString = "Json Data not found";
             }

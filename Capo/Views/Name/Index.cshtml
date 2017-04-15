@@ -1,0 +1,25 @@
+﻿@model IEnumerable<NameAPI.Models.NameModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Wireframe</h2>
+
+<div class="container">
+    <form class="form-group" action="~/Controllers/NameController/Reload()" method="post">
+        <select>
+            <option value="Both">Both</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select>
+
+        <input type="submit" value="Reload" />
+    </form>
+
+    @foreach (var item in Model) {
+        <p>@item.FirstName</p>
+        <p>@item.LastName</p>
+        <p>@item.Gender</p>
+    }
+</div>

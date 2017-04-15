@@ -7,3 +7,12 @@ C:\Users\Firas\Dropbox\Consid\Capo test\Capo AB - Anställningsprov (.NET utveck
 C:\Users\Firas\Dropbox\Consid\Capo test\Capo AB - Anställningsprov (.NET utvecklare)\Capo AB - Anställningsprov (.NET utvecklare)\Name\NameAPI\obj\Debug\NameAPI.csprojResolveAssemblyReference.cache
 C:\Users\Firas\Dropbox\Consid\Capo test\Capo AB - Anställningsprov (.NET utvecklare)\Capo AB - Anställningsprov (.NET utvecklare)\Name\NameAPI\obj\Debug\NameAPI.dll
 C:\Users\Firas\Dropbox\Consid\Capo test\Capo AB - Anställningsprov (.NET utvecklare)\Capo AB - Anställningsprov (.NET utvecklare)\Name\NameAPI\obj\Debug\NameAPI.pdb
+C:\Users\Firas\Documents\Visual Studio 2015\Projects\Name\NameAPI\bin\Debug\NameAPI.dll
+C:\Users\Firas\Documents\Visual Studio 2015\Projects\Name\NameAPI\bin\Debug\NameAPI.pdb
+C:\Users\Firas\Documents\Visual Studio 2015\Projects\Name\NameAPI\bin\Debug\Json.dll
+C:\Users\Firas\Documents\Visual Studio 2015\Projects\Name\NameAPI\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Firas\Documents\Visual Studio 2015\Projects\Name\NameAPI\bin\Debug\Json.pdb
+C:\Users\Firas\Documents\Visual Studio 2015\Projects\Name\NameAPI\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Firas\Documents\Visual Studio 2015\Projects\Name\NameAPI\obj\Debug\NameAPI.csprojResolveAssemblyReference.cache
+C:\Users\Firas\Documents\Visual Studio 2015\Projects\Name\NameAPI\obj\Debug\NameAPI.dll
+C:\Users\Firas\Documents\Visual Studio 2015\Projects\Name\NameAPI\obj\Debug\NameAPI.pdb
