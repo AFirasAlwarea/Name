@@ -1,0 +1,15 @@
+﻿@model IEnumerable<NameAPI.Models.NameModel>
+
+@{
+    ViewBag.Title = "_AjaxView";
+}
+
+<div id="showList">
+    @foreach (var item in Model)
+            {
+        <p>@item.FirstName &nbsp;@item.LastName, &nbsp;@item.Gender</p>
+    }
+</div>
+
+
+

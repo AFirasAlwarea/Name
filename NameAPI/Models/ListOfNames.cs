@@ -8,6 +8,6 @@ namespace NameAPI.Models
 {
     class ListOfNames
     {
-        public List<NameModel> nameList { get; set; }
+        public List<NameModel> name { get; set; }
     }
 }

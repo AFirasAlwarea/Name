@@ -7,19 +7,47 @@
 <h2>Wireframe</h2>
 
 <div class="container">
-    <form class="form-group" action="~/Controllers/NameController/Reload()" method="post">
-        <select>
-            <option value="Both">Both</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-        </select>
+    @using (Html.BeginForm("Reload", "Name", FormMethod.Post))
+    {
+        <div class="form-inline">
+            <div class="form-group">
+                Gender:
+                <select name="gender">
+                    <option value="both">Both</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
+            <div class="form-group">
+                Type:
+                <select name="type">
+                    <option value="both">Both</option>
+                    <option value="firstname">First Name</option>
+                    <option value="lastname">Last Name</option>
+                </select>
+            </div>
+            <div class="form-group">
+                Number: <input name="limit" type="text" min="1" required />
+            </div>
 
-        <input type="submit" value="Reload" />
-    </form>
+            <input type="submit" value="Reload" />
 
-    @foreach (var item in Model) {
-        <p>@item.FirstName</p>
-        <p>@item.LastName</p>
-        <p>@item.Gender</p>
+        </div>
+    }
+    <div id="FirstList">
+        @foreach (var item in Model)
+            {
+            <p>@item.FirstName &nbsp;@item.LastName, &nbsp;@item.Gender</p>
+        }
+    </div>
+    <div id="showList">
+    </div>
+    @using (Ajax.BeginForm("AjaxReload", "Name", new AjaxOptions
+    {
+        InsertionMode = InsertionMode.InsertAfter,
+        UpdateTargetId = "showList"
+    }))
+    {
+        <input type="submit" value="Load More" />
     }
 </div>

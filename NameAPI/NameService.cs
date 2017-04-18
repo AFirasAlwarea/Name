@@ -5,6 +5,8 @@ using System;
 using Newtonsoft.Json;
 using System.Web.Script.Serialization;
 using System.Collections;
+using Newtonsoft.Json.Linq;
+using System.Linq;
 
 namespace NameAPI
 {
@@ -16,32 +18,19 @@ namespace NameAPI
         private static string urlType = "&type=";
         private static string urlLimit = "&limit=";
 
-        private static WebClient w = new WebClient();
+        // creating instance of objectsto be used in all methods
         private static string json_data = string.Empty;
+        private static List<NameModel> jsonResult = new List<NameModel>();
 
         public static List<NameModel> GetNameList(int limit)
         {
-            // TODO: Your code here
+            // downloading JSON-data as a string
             string url = urlGender + "both" + urlType + "both" + urlLimit + limit;
-
-            // attempt to download JSON data as a string
             json_data = GetJsonData(url);
-            List<NameModel> jsonResult = new List<NameModel>();
-            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            // trying to convert string of Json-data to list of NameModel
+            jsonResult = GetNames(json_data);
 
-            //ListOfNames nameList = new ListOfNames();
 
-            try
-            {
-                jsonResult = serializer.Deserialize<List<NameModel>>(json_data);
-                jsonResult = JsonConvert.DeserializeObject<List<NameModel>>(json_data);
-            }
-            catch (Exception)
-            {
-                jsonResult = new List<NameModel>();
-            }
-
-            //if (!string.IsNullOrEmpty(json_data))
 
             return jsonResult;
         }
@@ -55,8 +44,7 @@ namespace NameAPI
             // attempt to download JSON data as a string
             json_data = GetJsonData(url);
 
-            List<NameModel> jsonResult = !string.IsNullOrEmpty(json_data) ? JsonConvert.DeserializeObject<List<NameModel>>(json_data) : new List<NameModel>();
-
+            jsonResult = GetNames(json_data);
             return jsonResult;
         }
 
@@ -68,26 +56,29 @@ namespace NameAPI
             // attempt to download JSON data as a string
             json_data = GetJsonData(url);
 
-            List<NameModel> jsonResult = !string.IsNullOrEmpty(json_data) ? JsonConvert.DeserializeObject<List<NameModel>>(json_data) : new List<NameModel>();
-
+            jsonResult = GetNames(json_data);
             return jsonResult;
         }
 
         public static List<NameModel> GetNameList(NameType type, NameGender gender, int limit)
         {
             // TODO: Your code here
-            string url = urlGender + gender + urlType + type + urlLimit + limit;
+            string gender1 = gender.ToString().ToLower();
+            string type1 = type.ToString().ToLower();
+            string url = urlGender + gender1 + urlType + type1 + urlLimit + limit;
 
             // attempt to download JSON data as a string
             json_data = GetJsonData(url);
 
-            List<NameModel> jsonResult = !string.IsNullOrEmpty(json_data) ? JsonConvert.DeserializeObject<List<NameModel>>(json_data) : new List<NameModel>();
+            jsonResult = GetNames(json_data);
 
             return jsonResult;
         }
 
+        // method to get json-data from given url to a string
         private static string GetJsonData(string url)
         {
+            WebClient w = new WebClient();
             string jsonString;
             try
             {
@@ -97,8 +88,49 @@ namespace NameAPI
             {
                 jsonString = "Json Data not found";
             }
+            Console.WriteLine(jsonString);
             return jsonString;
         }
 
+        // method to convert string of json-data to List of NameModel 
+        private static List<NameModel> GetNames(string json_data)
+        {
+            //JavaScriptSerializer serializer = new JavaScriptSerializer();
+            jsonResult.Clear();
+            try
+            {
+                //jsonResult = (List<NameModel>)serializer.Deserialize<List<NameModel>>(json_data);
+                //var result = JsonConvert.DeserializeObject<ListOfNames>(json_data);
+                //List<NameModel> jsonResult = result.name.ToList();
+                var list = JObject.Parse(json_data)["names"];
+                foreach (var item in list)
+                {
+                    NameModel oneItem = new NameModel();
+                    oneItem.FirstName = (string)item["firstname"];
+                    oneItem.LastName = (string)item["surname"];
+                    switch ((string)item["gender"])
+                    {
+                        case "male":
+                            oneItem.Gender = NameGender.Male;
+                            break;
+                        case "female":
+                            oneItem.Gender = NameGender.Female;
+                            break;
+                        default:
+                            oneItem.Gender = NameGender.Both;
+                            break;
+                    }
+                    jsonResult.Add(oneItem);
+                    
+                }
+            }
+            catch (Exception)
+            {
+                jsonResult = new List<NameModel>();
+            }
+
+            //if (!string.IsNullOrEmpty(json_data))
+            return jsonResult;
+        }
     }
 }
