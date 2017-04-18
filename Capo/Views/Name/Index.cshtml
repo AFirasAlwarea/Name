@@ -31,17 +31,21 @@
             </div>
 
             <input type="submit" value="Reload" />
-
         </div>
     }
+    @* Printing the list of names according to the params that were passed in the
+        form above  *@
     <div id="FirstList">
         @foreach (var item in Model)
             {
             <p>@item.FirstName &nbsp;@item.LastName, &nbsp;@item.Gender</p>
         }
     </div>
+    @* creating new partial view division for loading new names *@
     <div id="showList">
     </div>
+    @* Ajax form to load more names according to the choices that has been defiend
+    in the form above in a previous action *@
     @using (Ajax.BeginForm("AjaxReload", "Name", new AjaxOptions
     {
         InsertionMode = InsertionMode.InsertAfter,

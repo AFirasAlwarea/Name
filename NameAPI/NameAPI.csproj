@@ -49,7 +49,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\ListOfNames.cs" />
     <Compile Include="Models\NameType.cs" />
     <Compile Include="Models\NameGender.cs" />
     <Compile Include="Models\NameModel.cs" />

@@ -10,7 +10,6 @@ using System.Linq;
 
 namespace NameAPI
 {
-
     public class NameService
     {
         // breaking the url to be able to modify the returned json data
@@ -22,54 +21,71 @@ namespace NameAPI
         private static string json_data = string.Empty;
         private static List<NameModel> jsonResult = new List<NameModel>();
 
+        // method to GetNameList with one parameter Limit
         public static List<NameModel> GetNameList(int limit)
         {
-            // downloading JSON-data as a string
+            // creating string to get JSON-data from NameAPI
             string url = urlGender + "both" + urlType + "both" + urlLimit + limit;
+
+            // Calling method GetJsonData and passing the required url as well
             json_data = GetJsonData(url);
-            // trying to convert string of Json-data to list of NameModel
+
+            // convert string of Json-data to list of NameModel
             jsonResult = GetNames(json_data);
-
-
 
             return jsonResult;
         }
 
-
+        // method to GetNameList with two parameters Limit & type
         public static List<NameModel> GetNameList(NameType type, int limit)
         {
-            // TODO: Your code here
-            string url = urlGender + "both" + urlType + type + urlLimit + limit;
+            // changing the passed strings to lowercase to match json data from NameAPI
+            string typeLowerCase = type.ToString().ToLower();
 
-            // attempt to download JSON data as a string
+            // creating string to get JSON-data from NameAPI
+            string url = urlGender + "both" + urlType + typeLowerCase + urlLimit + limit;
+
+            // Calling method GetJsonData and passing the required url as well
             json_data = GetJsonData(url);
 
+            // convert string of Json-data to list of NameModel
             jsonResult = GetNames(json_data);
+
             return jsonResult;
         }
 
+        // method to GetNameList with two parameters Limit & Gender
         public static List<NameModel> GetNameList(NameGender gender, int limit)
         {
-            // TODO: Your code here
+            // changing the passed strings to lowercase to match json data from NameAPI
+            string genderLowerCase = gender.ToString().ToLower();
+
+            // creating string to get JSON-data from NameAPI
             string url = urlGender + gender + urlType + "both" + urlLimit + limit;
 
-            // attempt to download JSON data as a string
+            // Calling method GetJsonData and passing the required url as well
             json_data = GetJsonData(url);
 
+            // convert string of Json-data to list of NameModel
             jsonResult = GetNames(json_data);
+
             return jsonResult;
         }
 
+        // method to GetNameList with three parameters Limit & Type & Gender
         public static List<NameModel> GetNameList(NameType type, NameGender gender, int limit)
         {
-            // TODO: Your code here
-            string gender1 = gender.ToString().ToLower();
-            string type1 = type.ToString().ToLower();
-            string url = urlGender + gender1 + urlType + type1 + urlLimit + limit;
+            // changing the passed strings to lowercase to match json data from NameAPI
+            string genderLowerCase = gender.ToString().ToLower();
+            string typeLowerCase = type.ToString().ToLower();
 
-            // attempt to download JSON data as a string
+            // creating string to get JSON-data from NameAPI
+            string url = urlGender + genderLowerCase + urlType + typeLowerCase + urlLimit + limit;
+
+            // Calling method GetJsonData and passing the required url as well
             json_data = GetJsonData(url);
 
+            // convert string of Json-data to list of NameModel
             jsonResult = GetNames(json_data);
 
             return jsonResult;
@@ -95,14 +111,12 @@ namespace NameAPI
         // method to convert string of json-data to List of NameModel 
         private static List<NameModel> GetNames(string json_data)
         {
-            //JavaScriptSerializer serializer = new JavaScriptSerializer();
+            // Clearing the list of json data in order not to add more names upon more requests
             jsonResult.Clear();
             try
             {
-                //jsonResult = (List<NameModel>)serializer.Deserialize<List<NameModel>>(json_data);
-                //var result = JsonConvert.DeserializeObject<ListOfNames>(json_data);
-                //List<NameModel> jsonResult = result.name.ToList();
                 var list = JObject.Parse(json_data)["names"];
+                // matching the JObject properties with NameModel fields
                 foreach (var item in list)
                 {
                     NameModel oneItem = new NameModel();
@@ -120,16 +134,14 @@ namespace NameAPI
                             oneItem.Gender = NameGender.Both;
                             break;
                     }
+                    // adding the new object oneItem to the List<NameModel>
                     jsonResult.Add(oneItem);
-                    
                 }
             }
             catch (Exception)
             {
                 jsonResult = new List<NameModel>();
             }
-
-            //if (!string.IsNullOrEmpty(json_data))
             return jsonResult;
         }
     }
